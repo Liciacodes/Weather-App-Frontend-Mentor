@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* Define custom colors */
+:root {
+  /* Neutral Colors */
+  --neutral-900: hsl(243, 96%, 9%);
+  --neutral-800: hsl(243, 27%, 20%);
+  --neutral-700: hsl(243, 23%, 24%);
+  --neutral-600: hsl(243, 23%, 30%);
+  --neutral-300: hsl(240, 6%, 70%);
+  --neutral-200: hsl(250, 6%, 84%);
+  --neutral-0: hsl(0, 0%, 100%);
+  
+  /* Orange */
+  --orange-500: hsl(28, 100%, 52%);
+  
+  /* Blue */
+  --blue-500: hsl(233, 67%, 56%);
+  --blue-700: hsl(248, 70%, 36%);
+}
+
+/* Define font faces */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/DMSans-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/assets/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Set base styles */
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  background: var(--neutral-900)
+}
