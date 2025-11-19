@@ -26,12 +26,15 @@ const HourlyForecast = () => {
         <select 
           value={selectedDay}
           onChange={(e) => setSelectedDay(e.target.value)}
-          className="bg-[hsl(243,23%,24%)] border border-[hsl(243,23%,30%)] text-[hsl(250,6%,84%)] text-sm font-medium rounded px-3 py-1 focus:outline-none focus:ring-1 focus:ring-[hsl(233,67%,56%)]"
+          className="bg-[hsl(243,23%,24%)] border-[0.5px] border-[hsl(243,23%,30%)] text-[hsl(250,6%,84%)] text-sm font-medium rounded px-3 py-1 focus:outline-none focus:ring-1 focus:ring-[hsl(243,23%,30%)] hover:bg-[hsl(243,23%,28%)] hover:border-[hsl(243,23%,40%)] transition-colors"
         >
           {days.map((day) => (
-            <option key={day} value={day} className="bg-[hsl(250,6%,84%)] text-white">
+            <option key={day} value={day} className="bg-[hsl(243,23%,24%)] rounded-md "
+            style={{
+        backgroundColor: 'hsl(243, 23%, 24%)',
+        color: 'hsl(250, 6%, 84%)',
+      }}>
               {day}
-
             </option>))}
         </select>
       </div>
@@ -39,7 +42,7 @@ const HourlyForecast = () => {
       {/* Hourly List */}
       <div className="space-y-6">
         {hourlyData.map((hour, index) => (
-          <div key={index} className="flex justify-between items-center bg-[hsl(243,23%,24%)] rounded-md border border-[hsl(250,6%,84%)] p-3">
+          <div key={index} className="flex justify-between items-center bg-[hsl(243,23%,24%)] rounded-md border-[0.5px] border-[hsl(243,23%,30%)] p-2">
             <div className="text-neutral-300 text-base">
                 <div className='flex items-center justify-center'>
                       <img src={hour.icon} alt="weather icon"  className='mx-auto mb-2 w-10 h-10'/>
@@ -47,7 +50,7 @@ const HourlyForecast = () => {
                 </div>
               
                 
-            <div className="text-white text-base font-medium">{hour.temp}°</div>
+            <div className="text-[hsl(240,6%,70%)] text-base font-medium">{hour.temp}°</div>
           </div>
         ))}
       </div>

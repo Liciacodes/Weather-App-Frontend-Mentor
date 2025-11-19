@@ -22,15 +22,15 @@ const Header = ({ units, setUnits }: UnitTogglerProps) => {
           className="
             appearance-none 
             pl-8 pr-6 py-2 
-            bg-[hsl(243,27%,20%)] text-white 
+            bg-[hsl(243,27%,20%)] text-[hsl(240,6%,70%)]
             rounded-lg outline-none cursor-pointer 
             font-medium
           "
           value={units}
           onChange={(e) => setUnits(e.target.value as "metric" | "imperial")}
         >
-          <option value="metric">Metric (°C)</option>
-          <option value="imperial">Imperial (°F)</option>
+          <option value="metric">Units</option>
+          <option value="imperial">Imperial</option>
         </select>
 
         {/* The dropdown arrow (custom) */}

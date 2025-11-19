@@ -6,10 +6,10 @@ interface WeatherMetricsProps {
 const WeatherMetrics = ({ title, value }: WeatherMetricsProps) => {
   return (
     <div className="bg-[hsl(243,27%,20%)]  shadow rounded-lg p-3">
-      <h2 className="text-md font-semibold mb-4 text-[hsl(0,0%,100%)]">
+      <h2 className="text-sm font-medium mb-4 text-[hsl(240,6%,70%)]">
         {title}
       </h2>
-      <p className="text-white">{value}</p>
+      <p className="text-white text-lg">{value}</p>
     </div>
   );
 };

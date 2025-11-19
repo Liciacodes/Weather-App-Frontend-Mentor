@@ -1,7 +1,7 @@
 const CurrentWeatherCard = () => {
   return (
     <div className=" mt-10">
-      <div className="relative max-w-5xl"> {/* Use max-width instead */}
+      <div className="relative max-w-8xl"> {/* Use max-width instead */}
         <img
           src="/assets/images/bg-today-large.svg"
           alt="Location Icon"
@@ -19,7 +19,7 @@ const CurrentWeatherCard = () => {
         {/* Right Content */}
         <div className="flex items-center absolute right-10 top-1/2 transform -translate-y-1/2 text-center">
           <img src="/assets/images/icon-sunny.webp" alt="Sun" className="w-24 h-24" />
-          <p className="text-white text-5xl font-semibold mt-2">20° C</p>
+          <p className="text-white text-7xl font-semibold mt-2 font-bricolage">20°</p>
         </div>
       </div>
     </div>
