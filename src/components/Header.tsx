@@ -24,7 +24,7 @@ const Header = ({ units, setUnits }: UnitTogglerProps) => {
             pl-8 pr-6 py-2 
             bg-[hsl(243,27%,20%)] text-[hsl(240,6%,70%)]
             rounded-lg outline-none cursor-pointer 
-            font-medium
+            font-medium focus:ring-2 focus:ring-white focus:ring-opacity-50
           "
           value={units}
           onChange={(e) => setUnits(e.target.value as "metric" | "imperial")}
