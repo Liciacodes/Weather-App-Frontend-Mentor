@@ -1,9 +1,18 @@
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import DailyForecast from "./DailyForecast";
 import HourlyForecast from "./HourlyForecast";
+import LoadingSkeleton from "./LoadingSkeleton";
 import WeatherMetrics from "./WeatherMetrics";
 
-const Content = () => {
+interface ContentProps {
+  isLoading?: boolean;
+}
+
+const Content = ({isLoading}: ContentProps) => {
+
+  if (isLoading) {
+return <LoadingSkeleton/>
+  }
   return (
     <section className="mx-auto px-20 mt-8 ">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
