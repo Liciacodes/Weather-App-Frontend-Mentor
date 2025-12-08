@@ -1,11 +1,11 @@
 const LoadingSkeleton = () => {
   return (
-    <section className="mx-auto px-20 mt-10 animate-pulse">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <section className="mx-auto px-4 sm:px-20 my-10 animate-pulse">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
         {/* Left Column */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 flex flex-col mb-20 sm:mb-0 gap-6">
           {/* Current Weather Card Skeleton */}
-          <div className="max-w-8xl w-full h-80 bg-[hsl(243,23%,24%)] rounded-xl flex flex-col justify-center items-center">
+          <div className="w-full h-80 bg-[hsl(243,23%,24%)] rounded-xl flex flex-col justify-center items-center">
             <div className="w-8 h-8 border-dotted border-4 border-white border-t-transparent rounded-full animate-spin"></div>
             <p className="text-white mt-2"> Loading...</p>
           </div>
@@ -21,9 +21,9 @@ const LoadingSkeleton = () => {
           </div>
 
           {/* Daily Forecast - 7 days exactly */}
-          <div className="mt-6 ">
+          <div className="mt-6">
             <p className="text-white mb-4">Daily Forecast</p>
-            <div className="grid grid-cols-2 md:grid-cols-7 gap-3 h-24">
+            <div className="grid grid-cols-2 md:grid-cols-7 gap-3 h-24 ">
               {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
                 <div key={day} className="bg-[hsl(243,27%,20%)] shadow rounded-lg p-4 text-center space-y-3"></div>
               ))}
@@ -32,26 +32,26 @@ const LoadingSkeleton = () => {
         </div>
 
         {/* Right Column - Hourly Forecast */}
-        <div className="lg:col-span-1">
-          <div className="bg-[hsl(243,27%,20%)] rounded-xl p-6">
+        <div className="lg:col-span-1 h-full">
+          <div className="bg-[hsl(243,27%,20%)] rounded-xl p-6 h-full flex flex-col">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-white font-semibold text-lg">Hourly forecast</h3>
               
               {/* Select dropdown skeleton */}
               <select name="" id="" className="bg-[hsl(243,23%,24%)] border-[0.5px] border-[hsl(243,23%,30%)] rounded px-3 py-1 w-24 h-8 text-white"
-              value={'-'}>
-                <option value="-" className="text-white"></option>
+              value="-"
+                disabled
+              >
+                 <option value="-">-</option>
               </select>
-            
             </div>
             
-            <div className="space-y-6">
-              {["Now", "12 PM", "1 PM", "2 PM", "3 PM", "4 PM"].map((time) => (
-                <div key={time} className="flex items-center justify-between py-2">
-                  <div className="h-4 bg-[hsl(243,23%,24%)] rounded w-16"></div>
-                  <div className="w-8 h-8 bg-[hsl(243,23%,24%)] rounded-full"></div>
-                  <div className="h-5 bg-[hsl(243,23%,24%)] rounded w-12"></div>
-                </div>
+            <div className="space-y-6 grow">
+              
+              {["Now", "12 PM", "1 PM", "2 PM", "3 PM", "4 PM"].map((time, index) => (
+                <div key={`${time}-${index}`} className="flex justify-between items-center w-full h-16 bg-[hsl(243,23%,24%)] rounded-md border-[0.5px] border-[hsl(243,23%,30%)] p-2">
+            
+          </div>
               ))}
             </div>
           </div>

@@ -1,23 +1,38 @@
+// components/HourlyForecast.tsx
 import { useState } from 'react';
+import { useUnits } from '../context/UnitsContext';
+import { formatTemperature } from '../utils/unitConverter';
 
-const HourlyForecast = () => {
+interface HourlyData {
+  time: string;
+  icon: string;
+  temp: number;
+}
+
+interface HourlyForecastProps {
+  hourlyData?: HourlyData[]; // Make it optional
+}
+
+const HourlyForecast = ({ hourlyData = [] }: HourlyForecastProps) => { // Add default value
   const [selectedDay, setSelectedDay] = useState('Tuesday');
+  const { units } = useUnits();
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  const hourlyData = [
-    {icon: '/assets/images/icon-fog.webp', time: '3 PM', temp: 20 },
-    {icon: '/assets/images/icon-sunny.webp', time: '4 PM', temp: 20 },
-    {icon: '/assets/images/icon-overcast.webp', time: '5 PM', temp: 20 },
-    {icon: '/assets/images/icon-drizzle.webp', time: '6 PM', temp: 19 },
-    {icon: '/assets/images/icon-fog.webp', time: '7 PM', temp: 18 },
-    {icon: '/assets/images/icon-partly-cloudy.webp', time: '8 PM', temp: 18 },
-    { icon: '/assets/images/icon-rain.webp',time: '9 PM', temp: 17 },
-    { icon: '/assets/images/icon-storm.webp',time: '10 PM', temp: 17 },
+  // Use default data if none provided
+  const data = hourlyData.length > 0 ? hourlyData : [
+    { time: "3 PM", icon: "/assets/images/icon-fog.webp", temp: 20 },
+    { time: "4 PM", icon: "/assets/images/icon-sunny.webp", temp: 20 },
+    { time: "5 PM", icon: "/assets/images/icon-overcast.webp", temp: 20 },
+    { time: "6 PM", icon: "/assets/images/icon-drizzle.webp", temp: 19 },
+    { time: "7 PM", icon: "/assets/images/icon-fog.webp", temp: 18 },
+    { time: "8 PM", icon: "/assets/images/icon-partly-cloudy.webp", temp: 18 },
+    { time: "9 PM", icon: "/assets/images/icon-rain.webp", temp: 17 },
+    { time: "10 PM", icon: "/assets/images/icon-storm.webp", temp: 17 },
   ];
 
   return (
-    <div className="bg-[hsl(243,27%,20%)] rounded-xl p-6 h-full mt-8">
+    <div className="bg-[hsl(243,27%,20%)] rounded-xl p-6 h-full flex flex-col">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-white font-semibold text-lg">Hourly forecast</h3>
@@ -31,26 +46,28 @@ const HourlyForecast = () => {
           {days.map((day) => (
             <option key={day} value={day} className="bg-[hsl(243,23%,24%)] rounded-md "
             style={{
-        backgroundColor: 'hsl(243, 23%, 24%)',
-        color: 'hsl(250, 6%, 84%)',
-      }}>
+              backgroundColor: 'hsl(243, 23%, 24%)',
+              color: 'hsl(250, 6%, 84%)',
+            }}>
               {day}
-            </option>))}
+            </option>
+          ))}
         </select>
       </div>
       
       {/* Hourly List */}
-      <div className="space-y-6">
-        {hourlyData.map((hour, index) => (
-          <div key={index} className="flex justify-between items-center bg-[hsl(243,23%,24%)] rounded-md border-[0.5px] border-[hsl(243,23%,30%)] p-2">
+      <div className="space-y-4 grow overflow-y-auto pr-1">
+        {data.map((hour, index) => (
+          <div key={`${hour.time}-${index}`} className="flex justify-between items-center bg-[hsl(243,23%,24%)] rounded-md border-[0.5px] border-[hsl(243,23%,30%)] p-2 min-h-[60px]">
             <div className="text-neutral-300 text-base">
-                <div className='flex items-center justify-center'>
-                      <img src={hour.icon} alt="weather icon"  className='mx-auto mb-2 w-10 h-10'/>
-                <p>{hour.time}</p></div>
-                </div>
-              
-                
-            <div className="text-[hsl(240,6%,70%)] text-base font-medium">{hour.temp}°</div>
+              <div className='flex items-center justify-center'>
+                <img src={hour.icon} alt="weather icon" className='mx-auto mb-2 w-10 h-10'/>
+                <p>{hour.time}</p>
+              </div>
+            </div>
+            <div className="text-[hsl(240,6%,70%)] text-base font-medium">
+              {formatTemperature(hour.temp, units.temperature)}
+            </div>
           </div>
         ))}
       </div>

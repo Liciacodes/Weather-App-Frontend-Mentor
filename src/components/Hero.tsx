@@ -118,16 +118,16 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
   };
 
   return (
-    <div className="text-center mt-16">
-      <h1 className="text-white text-5xl font-semibold mb-10 font-bricolage">
-        How's the sky looking today?
-      </h1>
+    <div className="text-center mt-16 px-4 sm:px-0">
+    <h1 className="text-white text-6xl sm:text-5xl font-semibold mb-16 sm:mb-10 font-bricolage">
+  How's the <span className="block sm:inline">sky looking</span> <span className="block sm:inline">today?</span>
+</h1>
 
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-3xl mx-auto w-full">
         
-        <div className="flex-1 relative max-w-lg">
+        <div className="w-full relative max-w-lg">
           
-          <div className={`flex items-center bg-[hsl(243,27%,20%)] px-4 py-3 rounded-lg shadow-lg cursor-pointer transition-all duration-200 ${isInputFocused ? 'ring-2 ring-white ring-opacity-50' : ''}`}>
+          <div className={`flex items-center bg-[hsl(243,27%,20%)] px-4 py-3 rounded-lg shadow-lg cursor-pointer transition-all duration-200 w-full ${isInputFocused ? 'ring-2 ring-white ring-opacity-50' : ''}`}>
             <img
               src="/assets/images/icon-search.svg"
               alt="Search icon"
@@ -151,7 +151,7 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
                   handleSearchClick();
                 }
               }}
-              className="flex-1 bg-transparent text-white placeholder:text-white placeholder:opacity-60 focus:outline-none text-lg"
+              className="flex-1 bg-transparent text-white placeholder:text-white placeholder:opacity-60 focus:outline-none text-lg w-full"
             />
           </div>
 
@@ -214,7 +214,7 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
 
         <button 
           onClick={handleSearchClick}
-          className={`bg-[hsl(248,70%,36%)] hover:bg-[hsl(248,70%,40%)] px-6 py-3 rounded-lg text-white font-semibold transition-colors cursor-pointer shadow-lg ${isInputFocused ? 'ring-2 ring-[hsl(233,67%,56%)] ring-opacity-50' : ''} ${isSearching ? 'opacity-70 cursor-not-allowed' : ''}`}
+          className={`bg-[hsl(248,70%,36%)] hover:bg-[hsl(248,70%,40%)] px-6 py-3 rounded-lg text-white font-semibold transition-colors cursor-pointer shadow-lg w-full sm:w-auto ${isInputFocused ? 'ring-2 ring-[hsl(233,67%,56%)] ring-opacity-50' : ''} ${isSearching ? 'opacity-70 cursor-not-allowed' : ''}`}
           disabled={isSearching}
         >
           {isSearching ? 'Searching...' : 'Search'}
