@@ -12,7 +12,7 @@ const dropdownVariants = {
 // Define props interface
 interface HeroProps {
   setNoResults: (value: boolean) => void;
-  onLocationSelect?: (location: string, hasResults: boolean) => void; // Optional
+  onLocationSelect: (location: string, hasResults: boolean) => void; // Changed to required
 }
 
 const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
@@ -23,6 +23,7 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
   const [hasApiError, setHasApiError] = useState(false);
 
+  // Keep only the original cities
   const cities = [
     'Berlin, Germany', 'London, UK', 'Paris, France', 'Tokyo, Japan', 'New York, USA', 
   ];
@@ -44,7 +45,7 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
       );
       setFilteredCities(filtered);
       setIsSearching(false);
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(searchTimeout);
   }, [searchValue]);
@@ -74,54 +75,47 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
     setIsDropdownOpen(false);
     setNoResults(false); 
     
-    // If you want to pass the location up to App
-    if (onLocationSelect) {
-      onLocationSelect(city, true);
-    }
+    // Pass to App for weather data
+    onLocationSelect(city, true);
   };
 
   // Handle search button click
   const handleSearchClick = () => {
-    if (searchValue.trim() === '') return;
+    const searchTerm = searchValue.trim();
+    if (!searchTerm) return;
     
     setIsSearching(true);
+    setIsDropdownOpen(false);
+    setNoResults(false); // Reset NoResults state
     
-    // Simulate API call/search
-    setTimeout(() => {
-      const hasResults = cities.some(city => 
-        city.toLowerCase().includes(searchValue.toLowerCase())
+    // Check if it's one of the predefined cities
+    const isPredefinedCity = cities.some(city => 
+      city.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    if (isPredefinedCity) {
+      // If it's a predefined city, find the exact match
+      const matchedCity = cities.find(city => 
+        city.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      
-      if (hasResults) {
-        // If results found, select the first matching city
-        const matchedCity = cities.find(city => 
-          city.toLowerCase().includes(searchValue.toLowerCase())
-        );
-        if (matchedCity) {
-          setSearchValue(matchedCity);
-          setNoResults(false);
-          if (onLocationSelect) {
-            onLocationSelect(matchedCity, true);
-          }
-        }
-      } else {
-        // No results found
-        setNoResults(true);
-        if (onLocationSelect) {
-          onLocationSelect(searchValue, false);
-        }
+      if (matchedCity) {
+        setSearchValue(matchedCity);
+        onLocationSelect(matchedCity, true);
       }
-      
-      setIsSearching(false);
-      setIsDropdownOpen(false);
-    }, 800);
+    } else {
+      // If it's not a predefined city, pass it to App for geocoding
+      // We assume it has results unless proven otherwise
+      onLocationSelect(searchTerm, true);
+    }
+    
+    setIsSearching(false);
   };
 
   return (
     <div className="text-center mt-16 px-4 sm:px-0">
-    <h1 className="text-white text-6xl sm:text-5xl font-semibold mb-16 sm:mb-10 font-bricolage">
-  How's the <span className="block sm:inline">sky looking</span> <span className="block sm:inline">today?</span>
-</h1>
+      <h1 className="text-white text-6xl sm:text-5xl font-semibold mb-16 sm:mb-10 font-bricolage">
+        How's the <span className="block sm:inline">sky looking</span> <span className="block sm:inline">today?</span>
+      </h1>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-3xl mx-auto w-full">
         
@@ -135,7 +129,7 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
             />
             <input
               type="search"
-              placeholder="Search for a place..."
+              placeholder="Search for a country, city, or place..."
               value={searchValue}
               onChange={handleInputChange}
               onBlur={() => {
@@ -171,7 +165,7 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
                 {isSearching ? (
                   <div className="px-4 flex items-center p-4">
                     <div className="w-4 h-4 border-4 border-dotted border-[hsl(250,6%,84%)] border-t-transparent rounded-full animate-spin mr-3"></div>
-                    <p className="text-white text-sm font-medium">Searching...</p>
+                    <p className="text-white text-sm font-medium">Search in progress</p>
                   </div>
                 ) : filteredCities.length > 0 ? (
                   // SHOW FILTERED RESULTS WHEN NOT SEARCHING
@@ -202,10 +196,19 @@ const Hero = ({ setNoResults, onLocationSelect }: HeroProps) => {
                     </motion.button>
                   ))
                 ) : (
-                
-                  <div className="py-6 text-center">
-                    <p className="text-gray-400 text-sm">No places found for "{searchValue}"</p>
-                  </div>
+                  // USER IS SEARCHING FOR A NEW LOCATION - SHOW SEARCH OPTION
+                  <motion.button
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                      handleSearchClick();
+                    }}
+                    className="w-full text-left px-4 py-3 text-white hover:bg-[hsl(243,27%,25%)] hover:rounded-sm transition-colors text-sm border-[hsl(243,27%,25%)] last:border-b-0 flex items-center gap-2"
+                  >
+                    <img src="/assets/images/icon-search.svg" alt="Search" className="w-4 h-4 opacity-80" />
+                    <span>Search in progress...</span>
+                  </motion.button>
                 )}
               </motion.div>
             )}

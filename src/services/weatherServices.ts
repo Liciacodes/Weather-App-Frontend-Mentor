@@ -1,5 +1,5 @@
 // services/weatherService.ts - SAFE VERSION
-import type{ TemperatureUnit, WindUnit, PrecipitationUnit } from '../context/UnitsContext';
+import type { TemperatureUnit, WindUnit, PrecipitationUnit } from '../context/UnitsContext';
 
 export interface WeatherData {
   location: string;
@@ -13,6 +13,7 @@ export interface WeatherData {
     visibility: number;
     weatherCode: number;
     description: string;
+    icon: string;
   };
   daily: Array<{
     day: string;
@@ -97,6 +98,8 @@ export const fetchWeatherData = async (
     const response = await fetch(url.toString());
     
     if (!response.ok) {
+      // For API errors (404, 500, etc.), throw immediately
+      console.error(`Weather API error: ${response.status} ${response.statusText}`);
       throw new Error(`Weather API error: ${response.status}`);
     }
 
@@ -162,7 +165,8 @@ export const fetchWeatherData = async (
         pressure: Math.round(safeNumber(current.pressure_msl, 1013)),
         visibility: Math.round(safeNumber(current.visibility, 10000)),
         weatherCode: currentWeatherCode,
-        description: 'Clear sky', // You can add descriptions if needed
+        description: 'Clear sky',
+        icon: currentIcon,
       },
       daily: dailyForecast,
       hourly: hourlyForecast.length > 0 ? hourlyForecast : [
@@ -178,7 +182,14 @@ export const fetchWeatherData = async (
     };
   } catch (error) {
     console.error('Error fetching weather data:', error);
-    // Return default data on error
+    
+    
+    if (error instanceof Error && error.message.includes('Weather API error')) {
+      console.log('Re-throwing API error to be handled by App component');
+      throw error; 
+    }
+   
+    console.log('Returning default data for non-critical error');
     return {
       location: locationName,
       current: {
@@ -190,7 +201,8 @@ export const fetchWeatherData = async (
         pressure: 1013,
         visibility: 10000,
         weatherCode: 0,
-        description: 'Clear sky'
+        description: 'Clear sky',
+        icon: '/assets/images/icon-sunny.webp'
       },
       daily: [
         { day: "Mon", icon: "/assets/images/icon-sunny.webp", highTemp: 22, lowTemp: 15 },
