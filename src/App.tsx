@@ -1,4 +1,4 @@
-// App.tsx
+// App.tsx - UPDATED WITH SOUNDS
 import { useState, useEffect } from 'react';
 import { UnitsProvider, useUnits } from './context/UnitsContext';
 import Header from './components/Header';
@@ -7,6 +7,7 @@ import Content from './components/Content';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import NoResults from './components/NoResult';
 import ErrorState from './components/ErrorState';
+import SimpleSoundPlayer from './components/SimpleSoundPlayer'; // NEW IMPORT
 import { fetchWeatherData } from './services/weatherServices';
 import type { WeatherData } from './services/weatherServices';
 
@@ -229,6 +230,15 @@ const AppContent = () => {
   return (
     <div className="min-h-screen bg-[#0B0F2F]">
       <Header />
+      
+      
+      {weatherData && !isLoading && (
+      <SimpleSoundPlayer 
+        weatherCode={weatherData.current.weatherCode}   
+      />
+    )}
+    
+
       <Hero 
         onLocationSelect={handleLocationSelect}
         setNoResults={(hasNoResults) => {
@@ -239,10 +249,10 @@ const AppContent = () => {
         }}
       />
       
-      {/* Error Message - only show for non-API errors */}
+   
      
 
-      {/* Show NoResults component when no results */}
+    
       {showNoResults && <NoResults />}
 
       {/* Loading or Content */}

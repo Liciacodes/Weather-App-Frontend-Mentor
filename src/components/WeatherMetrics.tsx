@@ -2,13 +2,13 @@
 import { useUnits } from '../context/UnitsContext';
 import { formatTemperature, formatWindSpeed, formatPrecipitation } from '../utils/unitConverter';
 
-// Define the allowed types as a union
+
 type WeatherMetricType = 'temperature' | 'wind' | 'precipitation' | 'humidity' | 'pressure' | 'visibility';
 
 interface WeatherMetricsProps {
   title: string;
   value: number;
-  type: WeatherMetricType; // Use the defined type
+  type: WeatherMetricType;
 }
 
 const WeatherMetrics = ({ title, value, type }: WeatherMetricsProps) => {
@@ -27,7 +27,7 @@ const WeatherMetrics = ({ title, value, type }: WeatherMetricsProps) => {
       case 'pressure':
         return `${Math.round(value)} hPa`;
       case 'visibility':
-        // Convert meters to km for metric, meters to miles for imperial
+       
         if (units.wind === 'kmh') {
           return `${(value / 1000).toFixed(1)} km`;
         } else {

@@ -66,7 +66,7 @@ const Content = ({ isLoading, weatherData }: ContentProps) => {
   console.log('Content component data:', data); // Debug log
 
   return (
-    <section className="mx-auto px-4 sm:px-20 mt-10">
+    <section className="mx-auto px-4 sm:px-20 md:px-10 mt-10">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Takes 2/3 on desktop */}
         <div className="lg:col-span-2 flex flex-col gap-6">
